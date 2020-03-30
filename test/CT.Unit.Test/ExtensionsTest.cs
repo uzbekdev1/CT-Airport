@@ -6,7 +6,7 @@ using System;
 namespace CT.Unit.Test
 {
     [TestClass]
-    public class CommonTest
+    public class ExtensionsTest
     {
         [TestMethod]
         public void Calculation_Distance_Test()

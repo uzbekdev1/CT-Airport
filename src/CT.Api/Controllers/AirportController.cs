@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CT.Api.Models;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CT.Api.Controllers
 {
+
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AirportController : ControllerBase
@@ -21,7 +21,7 @@ namespace CT.Api.Controllers
             _service = service;
         } 
 
-        [HttpPost("calc-dist")]
+        [HttpPost]
         public async Task<IActionResult> CaculateDistance([FromBody]DistanceInputModel model)
         {
             if (!ModelState.IsValid)
@@ -31,10 +31,9 @@ namespace CT.Api.Controllers
 
             var sourceAir = await _service.GetAirport(model.SourceCode) ?? throw new AppException("Source entry is null");
             var targetAir = await _service.GetAirport(model.TargetCode) ?? throw new AppException("Target entry is null");
-
             var betweenDist = sourceAir.location.GetDistance(targetAir.location);
 
-            return Ok($"{betweenDist:0.######}");
+            return Ok(betweenDist);
         }
 
     }

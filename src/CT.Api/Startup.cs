@@ -25,7 +25,7 @@ namespace CT.Api
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
             //config 
             var config = new AppConfig();
@@ -38,8 +38,9 @@ namespace CT.Api
                 a.BaseAddress = new Uri(config.SourceUrl);
             });
 
-            services.AddCors(a => a.AddPolicy("All", b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials()));
             services.AddMvc();
+            services.AddHttpClient();
+            services.AddCors(a => a.AddPolicy("All", b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials()));
 
             //swagger
             services.AddSwaggerGen(c =>
@@ -50,7 +51,7 @@ namespace CT.Api
                     Version = "v1"
                 });
             });
-         
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
