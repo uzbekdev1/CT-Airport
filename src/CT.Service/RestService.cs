@@ -13,10 +13,9 @@ namespace CT.Service
 
         private readonly HttpClient _client;
 
-        public RestService(IHttpClientFactory clientFactory, AppConfig config)
+        public RestService(HttpClient client)
         {
-            _client = clientFactory.CreateClient();
-            _client.BaseAddress = new Uri(config.SourceUrl);
+            _client = client;
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 

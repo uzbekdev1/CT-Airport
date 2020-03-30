@@ -32,11 +32,14 @@ namespace CT.Api
             Configuration.GetSection(nameof(AppConfig)).Bind(config);
             services.AddSingleton(config);
 
-            services.AddMvc();
-            services.AddHttpClient();
-
             //services
-            services.AddTransient<RestService>();
+            services.AddHttpClient<RestService>(a=>
+            {
+                a.BaseAddress = new Uri(config.SourceUrl);
+            });
+
+            services.AddCors(a => a.AddPolicy("All", b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials()));
+            services.AddMvc();
 
             //swagger
             services.AddSwaggerGen(c =>
@@ -47,9 +50,7 @@ namespace CT.Api
                     Version = "v1"
                 });
             });
-
-            services.AddCors(a => a.AddPolicy("All", b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials()));
-
+         
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

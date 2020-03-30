@@ -2,6 +2,7 @@ using CT.Api;
 using CT.Api.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
@@ -14,8 +15,20 @@ using System.Threading.Tasks;
 namespace CT.Integration.Test
 {
     [TestClass]
-    public class ApiTest : IntegrationTestInitializer
+    public class ApiTest : IDisposable
     {
+        private TestServer _server;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            var webHostBuilder = WebHost.CreateDefaultBuilder();
+
+            webHostBuilder.UseStartup<Startup>();
+
+            _server = new TestServer(webHostBuilder);
+
+        }
 
         [TestMethod]
         [DataRow("calc-dist")]
@@ -26,7 +39,8 @@ namespace CT.Integration.Test
             var expected = 4158;
 
             // Act
-            var response = await _client.PostAsJsonAsync(request, new DistanceInputModel
+            var client = _server.CreateClient();
+            var response = await client.PostAsJsonAsync(request, new DistanceInputModel
             {
                 SourceCode = "AMS",
                 TargetCode = "USA"
@@ -37,6 +51,12 @@ namespace CT.Integration.Test
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.AreEqual(Math.Round(actual), expected);
 
+        }
+
+        [TestCleanup]
+        public void Dispose()
+        {
+            _server.Dispose();
         }
     }
 }
