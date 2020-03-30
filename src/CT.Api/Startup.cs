@@ -47,6 +47,9 @@ namespace CT.Api
                     Version = "v1"
                 });
             });
+
+            services.AddCors(a => a.AddPolicy("All", b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials()));
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -55,6 +58,8 @@ namespace CT.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("All");
 
             //swagger
             app.UseSwagger();

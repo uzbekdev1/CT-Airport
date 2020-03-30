@@ -19,13 +19,7 @@ namespace CT.Api.Controllers
         public AirportController(RestService service)
         {
             _service = service;
-        }
-
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Values()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        } 
 
         [HttpPost("calc-dist")]
         public async Task<IActionResult> CaculateDistance([FromBody]DistanceInputModel model)
