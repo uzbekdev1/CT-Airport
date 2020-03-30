@@ -24,7 +24,7 @@ namespace CT.Service
         /// </summary>
         /// <param name="code">IATA code.</param>
         /// <returns></returns>
-        public async Task<AirportItem> GetAirport(string code)
+        public virtual async Task<AirportItem> GetAirport(string code)
         {
             var response = await _client.GetAsync($"/airports/{code}");
 

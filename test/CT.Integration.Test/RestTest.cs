@@ -40,7 +40,7 @@ namespace CT.Integration.Test
 
                 // Assert
                 Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-                Assert.AreEqual(Math.Round((double)actual), expected);
+                Assert.AreEqual(Math.Round(actual), expected);
             }
         }
     }
