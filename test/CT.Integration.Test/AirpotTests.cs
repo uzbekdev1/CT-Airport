@@ -14,7 +14,7 @@ namespace CT.Integration.Test
 {
 
     [TestClass]
-    public class RestTest
+    public class AirpotTests
     {
 
         [TestMethod]

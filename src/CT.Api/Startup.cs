@@ -18,12 +18,15 @@ namespace CT.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+
+        public IHostingEnvironment Environment { get; set; }
 
         public virtual void ConfigureServices(IServiceCollection services)
         {
@@ -33,7 +36,7 @@ namespace CT.Api
             services.AddSingleton(config);
 
             //services
-            services.AddHttpClient<RestService>(a=>
+            services.AddHttpClient<AirportService>(a =>
             {
                 a.BaseAddress = new Uri(config.SourceUrl);
             });
@@ -54,14 +57,18 @@ namespace CT.Api
 
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.UseCors("All");
+
+            app.UseMvc();
 
             //swagger
             app.UseSwagger();
@@ -70,9 +77,6 @@ namespace CT.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "CT API V1");
                 c.RoutePrefix = "";
             });
-
-            app.UseMvc();
-
         }
     }
 }

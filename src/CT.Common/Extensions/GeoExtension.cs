@@ -1,7 +1,7 @@
-﻿using CT.Common.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CT.Common.Models;
 
 namespace CT.Common.Extensions
 {
@@ -15,10 +15,10 @@ namespace CT.Common.Extensions
         public static double GetDistance(this GeoLocation source, GeoLocation target)
         {
             if (source == null)
-                throw new AppException("Argument source is null");
+                throw new Exception("Argument source is null");
 
             if (target == null)
-                throw new AppException("Argument target is null");
+                throw new Exception("Argument target is null");
 
             //Calculate radius of earth
             var R = 3960;

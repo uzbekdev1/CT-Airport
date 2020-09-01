@@ -1,12 +1,12 @@
-using CT.Common.Dto;
 using CT.Common.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using CT.Common.Models;
 
 namespace CT.Unit.Test
 {
     [TestClass]
-    public class ExtensionsTest
+    public class ExtensionTests
     {
         [TestMethod]
         public void Calculation_Distance_Test()

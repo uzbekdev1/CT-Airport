@@ -5,7 +5,7 @@ namespace CT.Common
     public class AppConfig
     {
 
-        public string SourceUrl { get; set; } = "https://places-dev.cteleport.com";
+        public string SourceUrl { get; set; } 
 
     }
 }
